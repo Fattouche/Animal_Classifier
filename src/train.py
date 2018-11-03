@@ -1,4 +1,4 @@
-from .convnet import convnet, results
+from .convnet import *
 import os
 
 MEDIA_PATH = '../media/'
@@ -21,5 +21,5 @@ def count_images():
 
 if __name__ == '__main__':
     training_image_count, test_image_count = count_images()
-    history = convnet( TRAINING_PATH, TEST_PATH, training_image_count, test_image_count)
+    history = covnet.convnet(TRAINING_PATH, TEST_PATH, training_image_count, test_image_count)
     results(history)

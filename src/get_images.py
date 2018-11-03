@@ -14,12 +14,6 @@ NUMBER_OF_THREADS = 10
 BREED_LIST = ['hound', 'retriever', 'poodle', 'husky',
               'bulldog', 'mastiff', 'pug', 'rottweiler', 'shihtzu', 'samoyed', 'greyhound']
 
-# Retrieves and saves n random images of dogs
-# Parameters:
-#       n (int):  Number of dog images to retrieve and save
-#       names (list): list of numbers to append to names of images
-
-
 def get_image_urls():
     breed_dict = {}
     for breed in BREED_LIST:
@@ -42,7 +36,7 @@ def make_directories(breed):
 
 def get_dog_images(breed, dog_image_urls):
     make_directories(breed)
-    sliced_urls = dog_image_urls[:10]  # Only gets the top 10
+    sliced_urls = dog_image_urls
 
     num_test_files = len(sliced_urls)*TEST_PERCENTAGE
     # This number can be changed to grab more or less images
