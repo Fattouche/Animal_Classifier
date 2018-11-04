@@ -2,6 +2,7 @@ from tensorflow.keras import layers
 from tensorflow.keras import Model
 from tensorflow.keras.optimizers import RMSprop
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+import matplotlib.pyplot as plt
 
 BATCH_SIZE = 20
 
@@ -34,13 +35,13 @@ def convnet(train_dir, validation_dir, total_training_images, total_test_images)
     x = layers.Dense(512, activation='relu')(x)
 
     # Create output layer (might need an activation function? tbd)
-    output = layers.Dense(1)(x)
+    output = layers.Dense(11)(x)
 
     # Create model
     model = Model(img_input, output)
 
     # Specify RMSprop optimizer
-    model.compile(loss='categorical_crossentropy', optimizer=RMSprop(lr=0.001), metrics=['acc'])
+    model.compile(loss='categorical_crossentropy', optimizer=RMSprop(lr=0.0001), metrics=['acc'])
 
     # Image preprocessing
     train_datagen = ImageDataGenerator(rescale=1./255)
