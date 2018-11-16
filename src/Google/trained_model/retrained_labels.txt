@@ -1,0 +1,11 @@
+rottweiler
+mastiff
+bulldog
+samoyed
+shihtzu
+pug
+greyhound
+poodle
+husky
+hound
+retriever

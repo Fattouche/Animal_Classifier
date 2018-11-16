@@ -1,3 +1,5 @@
 keys.json
 media/*
 .vscode
+src/Google/bottleneck
+src/Google/summaries

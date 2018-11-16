@@ -6,3 +6,4 @@ services:
       - ./:/notebooks/app
     ports:
      - 8888:8888
+     - 8080:8080
