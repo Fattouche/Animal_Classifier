@@ -3,3 +3,4 @@ media/*
 .vscode
 src/Google/bottleneck
 src/Google/summaries
+*/__pycache__
