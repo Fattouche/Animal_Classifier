@@ -4,8 +4,7 @@ from tensorflow.keras.optimizers import RMSprop
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import matplotlib.pyplot as plt
 
-BATCH_SIZE = 20
-
+BATCH_SIZE = 3
 
 # Returns a trained model
 # Parameters:
@@ -14,7 +13,7 @@ BATCH_SIZE = 20
 #   total_training_images:  the total number of training images
 #   total_test_images:      the total number of test images
 #   
-def convnet(train_dir, validation_dir, total_training_images, total_test_images):
+def convnet(train_dir, validation_dir, total_training_images, total_test_images, batch_size, epochs):
     # Model Generation
     # Define input shape to be 150x150 pixels, each with an R, G, B value
     img_input = layers.Input(shape=(150, 150, 3))
@@ -26,13 +25,21 @@ def convnet(train_dir, validation_dir, total_training_images, total_test_images)
     x = layers.Conv2D(32, 3, activation='relu')(x)
     x = layers.MaxPooling2D(2)(x)
 
+    '''
     x = layers.Conv2D(64, 3, activation='relu')(x)
     x = layers.MaxPooling2D(2)(x)
+
+    x = layers.Conv2D(128, 3, activation='relu')(x)
+    x = layers.MaxPooling2D(2)(x)
+
+    '''
 
     # Flatten all the convolutional layers into one dimension
     x = layers.Flatten()(x)
 
     x = layers.Dense(512, activation='relu')(x)
+
+    x = layers.Dropout(0.6)(x)
 
     # Create output layer (might need an activation function? tbd)
     output = layers.Dense(11)(x)
@@ -41,33 +48,38 @@ def convnet(train_dir, validation_dir, total_training_images, total_test_images)
     model = Model(img_input, output)
 
     # Specify RMSprop optimizer
-    model.compile(loss='categorical_crossentropy', optimizer=RMSprop(lr=0.0001), metrics=['acc'])
+    model.compile(loss='categorical_crossentropy', optimizer=RMSprop(lr=0.001), metrics=['acc'])
 
     # Image preprocessing
-    train_datagen = ImageDataGenerator(rescale=1./255)
+    train_datagen = ImageDataGenerator(
+        rescale=1./255,
+        shear_range=0.2,
+        zoom_range=0.2,
+        horizontal_flip=True
+    )
     test_datagen = ImageDataGenerator(rescale=1./255)
 
     train_generator = train_datagen.flow_from_directory(
         train_dir,
         target_size=(150, 150), 
-        batch_size=BATCH_SIZE,
+        batch_size=batch_size,
         class_mode='categorical'
     )
 
     validation_generator = test_datagen.flow_from_directory(
         validation_dir, 
         target_size=(150, 150), 
-        batch_size=BATCH_SIZE,
+        batch_size=batch_size,
         class_mode='categorical'
     )
 
     # Train model
     history = model.fit_generator(
         train_generator,
-        steps_per_epoch=(total_training_images/BATCH_SIZE),
-        epochs=15,
+        steps_per_epoch=(total_training_images/batch_size),
+        epochs=epochs,
         validation_data=validation_generator,
-        validation_steps=(total_test_images/BATCH_SIZE),
+        validation_steps=(total_test_images/batch_size),
         verbose=2
     )
 

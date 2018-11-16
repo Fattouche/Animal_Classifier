@@ -21,5 +21,17 @@ def count_images():
 
 if __name__ == '__main__':
     training_image_count, test_image_count = count_images()
-    history = convnet(TRAINING_PATH, TEST_PATH, training_image_count, test_image_count)
-    results(history)
+
+
+    histories = []
+
+    for i in range (11, 100):
+
+
+        #history = convnet(TRAINING_PATH, TEST_PATH, training_image_count, test_image_count)
+        #results(history)
+        print ('Batch size {}'.format(i))
+        convnet(TRAINING_PATH, TEST_PATH, training_image_count, test_image_count, i, 8)
+        print()
+    
+    
