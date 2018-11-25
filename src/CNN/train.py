@@ -1,7 +1,7 @@
 from convnet import *
 import os
 
-MEDIA_PATH = '../media/'
+MEDIA_PATH = '../../media'
 TEST_PATH = os.path.join(MEDIA_PATH, 'test')
 TRAINING_PATH = os.path.join(MEDIA_PATH, 'train')
 NUMBER_OF_THREADS = 10
@@ -22,16 +22,11 @@ def count_images():
 if __name__ == '__main__':
     training_image_count, test_image_count = count_images()
 
-
     histories = []
 
-    for i in range (11, 100):
-
-
-        #history = convnet(TRAINING_PATH, TEST_PATH, training_image_count, test_image_count)
-        #results(history)
-        print ('Batch size {}'.format(i))
-        convnet(TRAINING_PATH, TEST_PATH, training_image_count, test_image_count, i, 8)
-        print()
+    history = convnet(TRAINING_PATH, TEST_PATH, training_image_count, test_image_count, 8)
+    results(history)
+    #convnet(TRAINING_PATH, TEST_PATH, training_image_count, test_image_count, 8)
+    print()
     
     

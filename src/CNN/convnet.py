@@ -3,8 +3,12 @@ from tensorflow.keras import Model
 from tensorflow.keras.optimizers import RMSprop
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import matplotlib.pyplot as plt
+from tensorflow.keras.callbacks import TensorBoard
+from time import time
+
 
 BATCH_SIZE = 3
+batch_size = 5
 
 # Returns a trained model
 # Parameters:
@@ -12,8 +16,9 @@ BATCH_SIZE = 3
 #   validation_dir:         directory containing the test data
 #   total_training_images:  the total number of training images
 #   total_test_images:      the total number of test images
+#   epochs:                 the number of epochs to perform
 #   
-def convnet(train_dir, validation_dir, total_training_images, total_test_images, batch_size, epochs):
+def convnet(train_dir, validation_dir, total_training_images, total_test_images, epochs):
     # Model Generation
     # Define input shape to be 150x150 pixels, each with an R, G, B value
     img_input = layers.Input(shape=(150, 150, 3))
@@ -25,10 +30,10 @@ def convnet(train_dir, validation_dir, total_training_images, total_test_images,
     x = layers.Conv2D(32, 3, activation='relu')(x)
     x = layers.MaxPooling2D(2)(x)
 
-    '''
     x = layers.Conv2D(64, 3, activation='relu')(x)
     x = layers.MaxPooling2D(2)(x)
 
+    '''
     x = layers.Conv2D(128, 3, activation='relu')(x)
     x = layers.MaxPooling2D(2)(x)
 
@@ -42,7 +47,7 @@ def convnet(train_dir, validation_dir, total_training_images, total_test_images,
     x = layers.Dropout(0.6)(x)
 
     # Create output layer (might need an activation function? tbd)
-    output = layers.Dense(11)(x)
+    output = layers.Dense(11, activation='relu')(x)
 
     # Create model
     model = Model(img_input, output)
@@ -73,14 +78,18 @@ def convnet(train_dir, validation_dir, total_training_images, total_test_images,
         class_mode='categorical'
     )
 
+    tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
+
+
     # Train model
     history = model.fit_generator(
         train_generator,
-        steps_per_epoch=(total_training_images/batch_size),
+        steps_per_epoch=(total_training_images/batch_size if total_training_images/batch_size else 500),
         epochs=epochs,
         validation_data=validation_generator,
-        validation_steps=(total_test_images/batch_size),
-        verbose=2
+        validation_steps=(total_test_images/batch_size if total_test_images/batch_size else 500),
+        verbose=2,
+        callbacks=[tensorboard]
     )
 
     return history
