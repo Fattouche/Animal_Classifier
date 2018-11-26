@@ -1,6 +1,8 @@
 keys.json
 media/*
 .vscode
-src/Google/bottleneck
-src/Google/summaries
-*/__pycache__
+bottleneck
+summaries
+trained_model
+__pycache__
+test.py

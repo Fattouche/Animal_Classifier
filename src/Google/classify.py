@@ -18,14 +18,14 @@ Classify images from test folder and predict dog breeds along with score.
 '''
 
 
-def classify_image(image_path):
+def classify_image(image_path, data_type):
 
     # Loads label file, strips off carriage return
     label_lines = [line.rstrip() for line
-                   in tf.gfile.GFile("trained_model/retrained_labels.txt")]
+                   in tf.gfile.GFile(data_type+"/trained_model/retrained_labels.txt")]
 
     # Unpersists graph from file
-    with tf.gfile.FastGFile("trained_model/retrained_graph.pb", 'rb') as f:
+    with tf.gfile.FastGFile(data_type+"/trained_model/retrained_graph.pb", 'rb') as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
         _ = tf.import_graph_def(graph_def, name='')
@@ -52,18 +52,24 @@ def classify_image(image_path):
                 human_string = label_lines[node_id]
                 score = predictions[0][node_id]
                 # print("Prediction: {0}, accuracy: {1} actual: {2}".format(
-                # human_string, score, directory))
+                #   human_string, score, directory))
                 if(human_string == directory):
                     correct_decisions += 1
                 total_files += 1
     percentage_correct = (correct_decisions/total_files)*100
+    print("total correct: {0}  total_files:{1}".format(
+        correct_decisions, total_files))
     print("Total accuracy: {0}%".format(percentage_correct))
     f.close()
 
 
 def main():
-    test_data_folder = '../../media/API/test/'
-    classify_image(test_data_folder)
+    if(len(sys.argv) > 1):
+        data_type = sys.argv[1]
+    else:
+        data_type = "API"
+    test_data_folder = '../../media/{0}/test/'.format(data_type)
+    classify_image(test_data_folder, data_type)
 
 
 if __name__ == '__main__':

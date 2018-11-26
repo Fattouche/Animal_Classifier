@@ -1,1 +1,1 @@
-python retrain.py --image_dir=../../media/API/train/ --bottleneck_dir=bottleneck/ --how_many_training_steps=50 --output_graph=trained_model/retrained_graph.pb --output_labels=trained_model/retrained_labels.txt --summaries_dir=summaries
+python retrain.py --image_dir=../../media/Kaggle/train/ --bottleneck_dir=Kaggle/bottleneck/ --how_many_training_steps=50 --output_graph=Kaggle/trained_model/retrained_graph.pb --output_labels=Kaggle/trained_model/retrained_labels.txt --summaries_dir=Kaggle/summaries
