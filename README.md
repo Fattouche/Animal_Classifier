@@ -1,5 +1,5 @@
 ## Animal Classifier
-This will classify specific types of dog breeds using a convolutional neural network.
+This project deals with dog breed classification through the use of a convolutional neural network and Google Visual Models.
 
 ### Information
 
