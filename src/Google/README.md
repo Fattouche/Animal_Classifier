@@ -21,3 +21,27 @@ The classify.py script was written by us and is responsible for actually classif
 #### Training
 During training, the api preformed very well, averaging 99% accuracy as shown in the diagram.
 ![image](../../graphs/API_Train_Accuracy.PNG)
+
+#### Testing
+During testing the results were similar to training:
+
+``` 
+total correct: 395  total_files:398
+Total accuracy: 99.2462311557789%
+```
+
+### Kaggle
+
+#### Training 
+The training for Kaggle was not as succesfull as the API, which is most likely due to the fact that it had significantly more breeds and less images per breed. The average train accuracy was around 50% as shown in the figure.
+
+![image](../../graphs/Kaggle_train_accuracy.PNG)
+
+#### Testing
+
+The testing for the kaggle data set was poor in comparison to the API.
+
+```
+total correct: 224  total_files:856
+Total accuracy: 26.1682242991%
+```
