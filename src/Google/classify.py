@@ -19,12 +19,10 @@ Classify images from test folder and predict dog breeds along with score.
 
 
 def classify_image(image_path, data_type):
-
-    # Loads label file, strips off carriage return
     label_lines = [line.rstrip() for line
                    in tf.gfile.GFile(data_type+"/trained_model/retrained_labels.txt")]
 
-    # Unpersists graph from file
+    # reads model from file
     with tf.gfile.FastGFile(data_type+"/trained_model/retrained_graph.pb", 'rb') as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
@@ -45,14 +43,9 @@ def classify_image(image_path, data_type):
                 predictions = sess.run(softmax_tensor,
                                        {'DecodeJpeg/contents:0': image_data})
 
-                # Sort to show labels of first prediction in order of confidence
-                top_k = predictions[0].argsort()[-len(predictions[0]):][::-1]
+                # Get prediction
+                human_string = label_lines[predictions[0].argmax()]
 
-                node_id = top_k[0]
-                human_string = label_lines[node_id]
-                score = predictions[0][node_id]
-                # print("Prediction: {0}, accuracy: {1} actual: {2}".format(
-                #   human_string, score, directory))
                 if(human_string == directory):
                     correct_decisions += 1
                 total_files += 1
