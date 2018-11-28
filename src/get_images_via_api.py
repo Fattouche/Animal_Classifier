@@ -9,7 +9,7 @@ DOG_API_EXTENSTION = '/images'
 MEDIA_PATH = '../media/API/'
 TRAIN_SUBPATH = "train/"
 TEST_SUBPATH = "test/"
-TEST_PERCENTAGE = 0.1
+TEST_PERCENTAGE = 0.07
 NUMBER_OF_THREADS = 10
 BREED_LIST = ['hound', 'retriever', 'poodle', 'husky',
               'bulldog', 'mastiff', 'pug', 'rottweiler', 'shihtzu', 'samoyed', 'greyhound']

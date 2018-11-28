@@ -1,6 +1,7 @@
 import os
 import sys
 import pandas as pd
+
 '''
 1. You should download all of the kaggle set at https://www.kaggle.com/c/dog-breed-identification/data
 2. Extract the all.zip file and put it into media/Kaggle directory(you will need to make it)

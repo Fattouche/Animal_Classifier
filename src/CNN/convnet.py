@@ -33,17 +33,12 @@ def convnet(train_dir, validation_dir, total_training_images, total_test_images,
     x = layers.Conv2D(64, 3, activation='relu')(x)
     x = layers.MaxPooling2D(2)(x)
 
-    '''
-    x = layers.Conv2D(128, 3, activation='relu')(x)
-    x = layers.MaxPooling2D(2)(x)
-
-    '''
-
     # Flatten all the convolutional layers into one dimension
     x = layers.Flatten()(x)
 
     x = layers.Dense(512, activation='relu')(x)
 
+    # Add some Dropout
     x = layers.Dropout(0.6)(x)
 
     # Create output layer (might need an activation function? tbd)
